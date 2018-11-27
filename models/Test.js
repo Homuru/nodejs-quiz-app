@@ -70,6 +70,10 @@ class Test {
         }
     }
 
+    countTest() {
+        return knex('tests').count('id as number');
+    }
+
 };
 
 module.exports = Test;
