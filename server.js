@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 const moment = require('moment');
 var app = express();
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 3000;
 
 var passport = require('passport');
 var flash = require('connect-flash');
