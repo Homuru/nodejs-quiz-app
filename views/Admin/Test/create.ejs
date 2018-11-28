@@ -12,7 +12,9 @@
     <title>Admin Panel</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+    crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.11/combined/css/gijgo.min.css" rel="stylesheet">
 
     <link href="/datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <!-- MetisMenu CSS -->
@@ -56,13 +58,7 @@
                                     <input type="text" class="form-control" id="time" placeholder="Minutes">
                                 </div>
                                 <div class="form-group">
-                                    <label for="dtp_input1" class="control-label">Close Date</label>
-                                    <div class="input-group date form_datetime" data-date="2018-10-25T05:25:07Z"
-                                        data-date-format="yyyy-mm-dd hh:mm:ss" data-link-field="dtp_input1">
-                                        <input class="form-control" type="text" id="datetime" value="" readonly>
-                                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                                    </div>
-                                    <input type="hidden" id="dtp_input1" value="" /><br />
+                                    <input id="datetime" width="312" />
                                 </div>
                             </form>
                             <button type="button" class="btn btn-primary" id="add-test">Submit</button>
@@ -110,8 +106,7 @@
     <script src="/javascripts/jquery-3.3.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-
-    <script type="text/javascript" src="/datetimepicker/jquery-1.8.3.min.js" charset="UTF-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.11/combined/js/gijgo.min.js"></script>
 
     <script type="text/javascript" src="/datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
     <!-- Bootstrap Core JavaScript -->
@@ -134,17 +129,10 @@
         }
 
         $(document).ready(function () {
-            $('#onSuccess').hide();
-            $('.form_datetime').datetimepicker({
-                //language: 'fr',
-                weekStart: 1,
-                todayBtn: 1,
-                autoclose: 1,
-                todayHighlight: 1,
-                startView: 2,
-                forceParse: 0,
-                showMeridian: 1
+            $('#datetime').datetimepicker({
+                format: 'yyyy-mm-dd hh:mm:ss',
             });
+            $('#onSuccess').hide();
 
             $('#add-test').click(function () {
                 const name = $('#name').val();
