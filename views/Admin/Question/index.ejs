@@ -33,40 +33,32 @@
         <% include ../layout %>
 
         <div id="page-wrapper">
-            <table class="table" id="userTable">
+            <table class="table table-striped" id="userTable">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Username</th>
-                        <th scope="col">Admin Status</th>
-                        <th scope="col">Test</th>
+                        <th scope="col">Question</th>
+                        <th scope="col">Code</th>
+                        <th scope="col">Image</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <% for(i=0; i < userTable.length; ++i) { %>
+                    <% for(i=0; i < questionTable.length; ++i) { %>
                     <tr>
                         <th scope="row">
-                            <%= userTable[i].user.id %>
+                            <%= questionTable[i].id %>
                         </th>
                         <td>
-                            <%= userTable[i].user.username %>
+                            <%= questionTable[i].question %>
                         </td>
                         <td>
-                            <%= userTable[i].user.admin %>
+                            <%=questionTable[i].code %>
                         </td>
                         <td>
-                            <% for(j=0; j < userTable[i].test.length; ++j) { %>
-                                <%= userTable[i].test[j].name %>.
-                            <% } %>
+                            <%= questionTable[i].image %>
                         </td>
                     </tr>
                     <% } %>
-                    <!-- <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr> -->
                 </tbody>
             </table>
         </div>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Admin Panel</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="/datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <!-- MetisMenu CSS -->
+    <link href="/metisMenu/metisMenu.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/stylesheets/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <% include ../layout %>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Create New Test</h1>
+                </div>
+            </div>
+            <!-- Columns are always 50% wide, on mobile and desktop -->
+            <div class="alert alert-success" id="onSuccess">
+                <strong>Test created!</strong>
+            </div>
+            <div class="row">
+                <div class="col-xs-5" style="height: 100vh;">
+                    <h3>Test information</h3>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <form>
+                                <div class="form-group">
+                                    <label for="question">Test name</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Input test name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="code">Time limited</label>
+                                    <input type="text" class="form-control" id="time" placeholder="Minutes">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dtp_input1" class="control-label">Close Date</label>
+                                    <div class="input-group date form_datetime" data-date="2018-10-25T05:25:07Z"
+                                        data-date-format="yyyy-mm-dd hh:mm:ss" data-link-field="dtp_input1">
+                                        <input class="form-control" type="text" id="datetime" value="" readonly>
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                    </div>
+                                    <input type="hidden" id="dtp_input1" value="" /><br />
+                                </div>
+                            </form>
+                            <button type="button" class="btn btn-primary" id="add-test">Submit</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-7" style="border-left-style: double; height: 100%;">
+                    <h3>Adding Question</h3>
+                    <table class="table table-striped" id="userTable">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Question</th>
+                                <th scope="col">#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(i=0; i < questionTable.length; ++i) { %>
+                            <tr>
+                                <th scope="row">
+                                    <%= questionTable[i].id %>
+                                </th>
+                                <td>
+                                    <%= questionTable[i].question %>
+                                </td>
+                                <td>
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input" type="checkbox" value="<%= questionTable[i].id %> ">
+                                    </div>
+                                </td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="/javascripts/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="/datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+
+    <script type="text/javascript" src="/datetimepicker/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="/datetimepicker/js/locales/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/javascripts/sb-admin-2.js"></script>
+
+    <script src="/javascripts/moment.js"></script>
+
+    <script>
+        function getAllChecked() {
+            var allVals = [];
+            $("input[type='checkbox']:checked").each(function () {
+                allVals.push($(this).val());
+            });
+            return allVals;
+        }
+
+        $(document).ready(function () {
+            $('#onSuccess').hide();
+            $('.form_datetime').datetimepicker({
+                //language: 'fr',
+                weekStart: 1,
+                todayBtn: 1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                forceParse: 0,
+                showMeridian: 1
+            });
+
+            $('#add-test').click(function () {
+                const name = $('#name').val();
+                const time = $('#time').val();
+                const open = $('#datetime').val();
+                const test = {
+                    name: name,
+                    time: time,
+                    open: open,
+                };
+                const val = getAllChecked();
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/test/create',
+                    data: {
+                        test: test,
+                        question: val,
+                    }
+                }).done(function () {
+                    $('#onSuccess').show(500);
+                    $('#name').val('');
+                    $('#time').val('');
+                    $('#datetime').val('');
+                    $("input[type='checkbox']:checked").prop('checked', false);
+                });
+
+            });
+        })
+    </script>
+
+</body>
+
+</html>

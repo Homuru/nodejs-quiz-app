@@ -116,13 +116,13 @@ $(document).ready(function () {
             --current;
         }
         getData();
-    })
+    });
     $('#nextButton').click(function () {
         if (current < data.length - 1) {
             ++current;
         }
         getData();
-    })
+    });
 
 
     $('#finish').click(function () {

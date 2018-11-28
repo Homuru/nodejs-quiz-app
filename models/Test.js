@@ -3,12 +3,17 @@ const knex = require('../config/database')
 
 class Test {
 
+    getAll() {
+        return knex.select().table('tests');
+    }
+
     getbyID(id) {
         return knex('tests').where('id', id);
     }
 
+
     getbyUserID(id) {
-        return knex.select('id', 'type', 'time', 'open', 'active')
+        return knex.select('id', 'time', 'open', 'active', 'name')
             .table('accounts_has_tests').innerJoin('tests', 'accounts_has_tests.tests_id', '=', 'tests.id')
             .where('accounts_id', id);
     }
@@ -72,6 +77,21 @@ class Test {
 
     countTest() {
         return knex('tests').count('id as number');
+    }
+
+    insertTest(name, time, open) {
+        return knex('tests').insert({
+            name: name,
+            time: time,
+            open: open
+        });
+    }
+
+    addQuestion(testID, questionID) {
+        return knex('tests_has_questions').insert({
+            tests_id: testID,
+            questions_id: questionID
+        });
     }
 
 };

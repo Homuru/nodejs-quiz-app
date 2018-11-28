@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Admin Panel</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="/metisMenu/metisMenu.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/stylesheets/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <% include ../layout %>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Create new question</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="alert alert-success" id="onSuccess">
+                        <strong>Question created!</strong>
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <label for="question">Question</label>
+                            <input type="text" class="form-control" id="question" placeholder="Input question">
+                        </div>
+                        <div class="form-group">
+                            <label for="code">Code</label>
+                            <input type="text" class="form-control" id="code" placeholder="Input code">
+                        </div>
+                        <div class="form-group">
+                            <label for="code">Image</label>
+                            <input type="text" class="form-control" id="image" placeholder="Input image url">
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer">
+                    <button type="button" class="btn btn-success" id="add-answer">Add an answer</button>
+                </div>
+                <div class="panel-footer" id="answer-list">
+                    <!-- New question here -->
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" id="add-question">Submit</button>
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="/javascripts/jquery-3.3.1.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/javascripts/sb-admin-2.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            let answerNumber = 0;
+            $('#onSuccess').hide();
+            $('#add-answer').click(function () {
+                $('#answer-list').append(
+                    `<form class="form-inline" id="answer-form">
+                        <input type="text" class="form-control" id="answer${answerNumber}" placeholder="Input answer">
+                        <div class="form-check-inline">
+                            <input class="form-check-input" type="radio" name="correct" id="check${answerNumber}">
+                            <label class="form-check-label" for="check${answerNumber}">
+                                Correct
+                            </label>
+                        </div>
+                    </form>`
+                );
+                ++answerNumber;
+            });
+
+            $('#add-question').click(function () {
+                let answer = [];
+                let question = {
+                    question: $('#question').val(),
+                    code: $('#code').val(),
+                    image: $('#image').val()
+                };
+                for (i = 0; i < answerNumber; ++i) {
+                    if ($(`#check${i}`).prop('checked')) {
+                        answer[i] = {
+                            answer: $(`#answer${i}`).val(),
+                            correct: 1
+                        }
+                    } else {
+                        answer[i] = {
+                            answer: $(`#answer${i}`).val(),
+                            correct: 0
+                        }
+                    }
+                }
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/question/create',
+                    data: {
+                        question: question,
+                        answer: answer,
+                    }
+                }).done(function () {
+                    answerNumber = 0;
+                    $('#onSuccess').show(500);
+                    $('#question').val('');
+                    $('#code').val('');
+                    $('#image').val('');
+                    $('#answer-list').empty();
+                });
+            })
+        })
+    </script>
+
+</body>
+
+</html>
