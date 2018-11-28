@@ -15,10 +15,10 @@ var passport = require('passport');
 var flash = require('connect-flash');
 var path = require('path');
 // configuration ===============================================================
-// connect to our database
 
-require('./config/passport')(passport); // pass passport for configuration
+
 app.use(express.static(path.join(__dirname, 'public')));
+require('./config/passport')(passport); // pass passport for configuration
 
 
 

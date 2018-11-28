@@ -102,10 +102,11 @@
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.11/combined/js/gijgo.min.js"></script>
+    <script src="/javascripts/jquery-3.3.1.min.js"></script>
+
     <!-- Bootstrap Core JavaScript -->
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="/metisMenu/metisMenu.min.js"></script>
@@ -114,7 +115,8 @@
     <script src="/javascripts/sb-admin-2.js"></script>
 
     <script src="/javascripts/moment.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.11/combined/js/gijgo.min.js"></script>
+    
     <script>
         function getAllChecked() {
             var allVals = [];
@@ -123,13 +125,8 @@
             });
             return allVals;
         }
-
-        $(document).ready(function () {
-            $('#datetime').datetimepicker({
-                format: 'yyyy-mm-dd hh:mm:ss',
-            });
-            $('#onSuccess').hide();
-
+        $(window).on("load", function () {
+            
             $('#add-test').click(function () {
                 const name = $('#name').val();
                 const time = $('#time').val();
@@ -156,7 +153,13 @@
                 });
 
             });
-        })
+            
+            $('#datetime').datetimepicker({
+                format: 'yyyy-mm-dd hh:mm:ss',
+            });
+            
+            $('#onSuccess').hide();
+        });
     </script>
 
 </body>
