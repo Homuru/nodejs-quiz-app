@@ -159,4 +159,4 @@ class AdminController {
     };
 }
 
-module.exports = AdminController
+module.exports = AdminController;
