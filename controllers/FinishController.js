@@ -8,8 +8,15 @@ class FinishController {
         this.resultModel = new Result();
     }
 
-    getFinishPage(req, res, next) {
-        res.render('finish');
+    async getFinishPage(req, res, next) {
+        try {
+            console.log(req.user);
+            res.render('finish', {
+                user: req.user, // get the user out of session and pass to template
+            });
+        } catch (error) {
+            console.log(error)
+        }
     };
 
     async getResult(req, res, next) {
@@ -40,7 +47,7 @@ class FinishController {
                     result[j] = 1;
                 else result[j] = 0;
             }
-            await this.resultModel.insertResult(testID,userID,result);
+            await this.resultModel.insertResult(testID, userID, result);
             this.testModel.changeStatus(testID, userID);
         } catch (error) {
             console.log(error);

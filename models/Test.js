@@ -15,7 +15,18 @@ class Test {
     getbyUserID(id) {
         return knex.select('id', 'time', 'open', 'active', 'name')
             .table('accounts_has_tests').innerJoin('tests', 'accounts_has_tests.tests_id', '=', 'tests.id')
-            .where('accounts_id', id);
+            .where({
+                accounts_id: id,
+            });
+    }
+
+    getActivebyUserID(id) {
+        return knex.select('id', 'time', 'open', 'active', 'name')
+            .table('accounts_has_tests').innerJoin('tests', 'accounts_has_tests.tests_id', '=', 'tests.id')
+            .where({
+                accounts_id: id,
+                active: '1'
+            });
     }
 
     getTestContent(id) {

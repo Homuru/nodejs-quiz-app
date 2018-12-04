@@ -33,8 +33,8 @@ module.exports = function (app, passport) {
 	app.get('/exam/:testID', [authCtrl.isLoggedIn, examCtrl.isActive.bind(examCtrl)], examCtrl.getExamPage.bind(examCtrl));
 	app.get('/api/exam/:testID', examCtrl.getExam.bind(examCtrl));
 
-	app.get('/finish', finishCtrl.getFinishPage.bind(finishCtrl));
-	app.post('/finish/:testID', finishCtrl.getResult.bind(finishCtrl));
+	app.get('/finish', authCtrl.isLoggedIn, finishCtrl.getFinishPage.bind(finishCtrl));
+	app.post('/finish/:testID',authCtrl.isLoggedIn, finishCtrl.getResult.bind(finishCtrl));
 
 	// Admin routes
 	app.get('/admin', [authCtrl.isLoggedIn, adminCtrl.isAdmin.bind(adminCtrl)], adminCtrl.getAdminPage.bind(adminCtrl));

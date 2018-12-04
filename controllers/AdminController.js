@@ -48,7 +48,7 @@ class AdminController {
             console.log(users);
             let data = [];
             for (let i = 0; i < users.length; ++i) {
-                let tests = await this.testModel.getbyUserID(users[i].id);
+                let tests = await this.testModel.getActivebyUserID(users[i].id);
                 console.log(tests);
                 data[i] = {
                     user: users[i],
