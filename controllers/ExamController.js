@@ -35,10 +35,10 @@ class ExamController {
         let testID = req.params.testID;
         try {
             let results = await this.testModel.getTestContent(testID);
-            var q = results.map(result => result.questions_id);
+            var q = results.map(result => result.questions_id); // Lay cac question id
             questions = q.filter((q, index, self) => {
                 return self.indexOf(q) == index;
-            });
+            }); // Remove duplicates
             var all = results;
             for (var j = 0; j < questions.length; j++) {
                 current = questions[j];

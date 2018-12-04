@@ -66,8 +66,10 @@ function getResult(answers, total) {
 var current = 0;
 var total;
 var answers = [];
+var now = moment();
 
 $(document).ready(function () {
+    var currentTime = moment();
     $.ajax({
         type: 'GET',
         url: '/api/exam/' + window.location.pathname.split('/')[2],
@@ -76,7 +78,6 @@ $(document).ready(function () {
             display = $('#timer');
             time = big.time;
             console.log(time);
-            var now = moment();
             var des = now.add(time, 'm');
             console.log(des);
             var newdes = des.toDate();
@@ -138,6 +139,7 @@ $(document).ready(function () {
                         url: '/finish/' + window.location.pathname.split('/')[2],
                         data: {
                             answer: getResult(answers, total),
+                            time: now.format("YYYY-MM-DD HH:mm:ss"),
                         }
                     });
                 },

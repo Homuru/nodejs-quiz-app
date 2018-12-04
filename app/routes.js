@@ -34,7 +34,7 @@ module.exports = function (app, passport) {
 	app.get('/api/exam/:testID', examCtrl.getExam.bind(examCtrl));
 
 	app.get('/finish', authCtrl.isLoggedIn, finishCtrl.getFinishPage.bind(finishCtrl));
-	app.post('/finish/:testID',authCtrl.isLoggedIn, finishCtrl.getResult.bind(finishCtrl));
+	app.post('/finish/:testID', authCtrl.isLoggedIn, finishCtrl.getResult.bind(finishCtrl));
 
 	// Admin routes
 	app.get('/admin', [authCtrl.isLoggedIn, adminCtrl.isAdmin.bind(adminCtrl)], adminCtrl.getAdminPage.bind(adminCtrl));
@@ -42,6 +42,7 @@ module.exports = function (app, passport) {
 	app.get('/admin/user/modify', [authCtrl.isLoggedIn, adminCtrl.isAdmin.bind(adminCtrl)], adminCtrl.getModifyUser.bind(adminCtrl));
 	app.post('/admin/user/modify', [authCtrl.isLoggedIn, adminCtrl.isAdmin.bind(adminCtrl)], adminCtrl.modifyUser.bind(adminCtrl));
 
+	app.get('/admin/test', [authCtrl.isLoggedIn, adminCtrl.isAdmin.bind(adminCtrl)], adminCtrl.getTestPage.bind(adminCtrl));
 	app.get('/admin/test/create', [authCtrl.isLoggedIn, adminCtrl.isAdmin.bind(adminCtrl)], adminCtrl.getNewTest.bind(adminCtrl));
 	app.get('/admin/test/modify', [authCtrl.isLoggedIn, adminCtrl.isAdmin.bind(adminCtrl)], adminCtrl.getModifyTest.bind(adminCtrl));
 	app.post('/admin/test/create', [authCtrl.isLoggedIn, adminCtrl.isAdmin.bind(adminCtrl)], adminCtrl.createNewTest.bind(adminCtrl));
@@ -49,5 +50,8 @@ module.exports = function (app, passport) {
 	app.get('/admin/question', [authCtrl.isLoggedIn, adminCtrl.isAdmin.bind(adminCtrl)], adminCtrl.getQuestionPage.bind(adminCtrl));
 	app.get('/admin/question/create', [authCtrl.isLoggedIn, adminCtrl.isAdmin.bind(adminCtrl)], adminCtrl.getNewQuestion.bind(adminCtrl));
 	app.post('/admin/question/create', [authCtrl.isLoggedIn, adminCtrl.isAdmin.bind(adminCtrl)], adminCtrl.createNewQuestion.bind(adminCtrl));
+
+	app.get('/admin/result', [authCtrl.isLoggedIn, adminCtrl.isAdmin.bind(adminCtrl)], adminCtrl.getResultPage.bind(adminCtrl));
+
 
 }

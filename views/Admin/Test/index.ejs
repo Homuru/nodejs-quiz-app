@@ -35,34 +35,32 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">User List</h1>
+                    <h1 class="page-header">Test List</h1>
                 </div>
             </div>
-            <table class="table table-striped" id="userTable">
+            <table class="table table-striped" id="testTable">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Username</th>
-                        <th scope="col">Admin Status</th>
-                        <th scope="col">Test</th>
+                        <th scope="col">Test name</th>
+                        <th scope="col">Time (minutes)</th>
+                        <th scope="col">Close Date</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <% for(i=0; i < userTable.length; ++i) { %>
+                    <% for(i=0; i < testTable.length; ++i) { %>
                     <tr>
                         <th scope="row">
-                            <%= userTable[i].user.id %>
+                            <%= testTable[i].id %>
                         </th>
                         <td>
-                            <%= userTable[i].user.username %>
+                            <%= testTable[i].name %>
                         </td>
                         <td>
-                            <%= userTable[i].user.admin %>
+                            <%= testTable[i].time %>
                         </td>
                         <td>
-                            <% for(j=0; j < userTable[i].test.length; ++j) { %>
-                            <%= userTable[i].test[j].name %>.
-                            <% } %>
+                            <%= testTable[i].open %>
                         </td>
                     </tr>
                     <% } %>

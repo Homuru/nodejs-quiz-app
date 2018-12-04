@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Admin Panel</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- MetisMenu CSS -->
+    <link href="/metisMenu/metisMenu.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="/stylesheets/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="/bootstrap-table-expandable/bootstrap-table-expandable.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+        <!-- Navigation -->
+        <% include ../layout %>
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">All Results</h1>
+                </div>
+            </div>
+            <table class="table table-hover table-expandable table-striped" id="resultTable">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Test Name</th>
+                        <th scope="col">Score</th>
+                        <th scope="col">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(i=0; i < resultTable.length; ++i) { %>
+                    <tr>
+                        <th scope="row">
+                            <%= resultTable[i].id %>
+                        </th>
+                        <td>
+                            <%= resultTable[i].username %>
+                        </td>
+                        <td>
+                            <%= resultTable[i].time %>
+                        </td>
+                        <td>
+                            <%= resultTable[i].name %>
+                        </td>
+                        <td>
+                            <%= score %>/
+                            <%= resultTable[i].result.length %>
+                        </td>
+                        <td>
+                            <button id="<%= resultTable[i].id %>" class="btn btn-info trigger">Details</button>
+                        </td>
+                    </tr>
+                    <tr style="display: none;">
+                        <td colspan="5" id="<%= resultTable[i].id %>">
+                            <h4>Details</h4>
+                            <table class="table" id="detailTable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Question</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for(j=0; j < resultTable[i].detail.length; ++j) { %>
+                                    <tr>
+                                        <th scope="row">
+                                            <%= j+1 %>
+                                        </th>
+                                        <th>
+                                            <%= resultTable[i].detail[j].question %>
+                                        </th>
+                                        <td>
+                                            <% if(resultTable[i].detail[j].result) { %>
+                                            <i class="fa fa-check-circle" style="color: green;"></i>
+                                            <% } else { %>
+                                            <i class="fa fa-times-circle" style="color: red;"></i>
+                                            <% } %>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="/javascripts/jquery-3.3.1.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script src="/bootstrap-table-expandable/bootstrap-table-expandable.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="/javascripts/sb-admin-2.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+        });
+    </script>
+
+</body>
+
+</html>

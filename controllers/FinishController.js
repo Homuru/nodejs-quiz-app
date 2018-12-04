@@ -27,6 +27,7 @@ class FinishController {
         let testID = req.params.testID;
         let userID = req.session.passport.user;
         var answer = req.body.answer;
+        var time = req.body.time;
         var result = [];
         try {
             let results = await this.testModel.getTestContent(testID);
@@ -47,7 +48,7 @@ class FinishController {
                     result[j] = 1;
                 else result[j] = 0;
             }
-            await this.resultModel.insertResult(testID, userID, result);
+            await this.resultModel.insertResult(testID, userID, result, time);
             this.testModel.changeStatus(testID, userID);
         } catch (error) {
             console.log(error);
