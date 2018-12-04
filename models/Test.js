@@ -43,7 +43,7 @@ class Test {
             const rows = await knex('accounts_has_tests').where({
                 accounts_id: userID,
                 tests_id: testID
-            })
+            });
             console.log(rows);
             return rows[0].active;
         } catch (err) {

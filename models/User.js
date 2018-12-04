@@ -27,6 +27,32 @@ class User {
     countUser() {
         return knex('accounts').count('id as number');
     }
+
+    async setPrivilege(userID, testID) {
+        try {
+            const rows = await knex('accounts_has_tests').where({
+                accounts_id: userID,
+                tests_id: testID
+            });
+            console.log(rows);
+            if (rows.length) {
+                knex('accounts_has_tests').where({
+                    accounts_id: userID,
+                    tests_id: testID
+                }).update({
+                    active: 1
+                }).then(console.log("Updated status!"));
+            } else {
+                knex('accounts_has_tests').insert({
+                    accounts_id: userID,
+                    tests_id: testID,
+                    active: 1
+                }).then(console.log("Created new record!"));
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 };
 
 module.exports = User;

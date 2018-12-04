@@ -41,7 +41,7 @@ class AdminController {
             console.log(error);
         }
     };
-
+    // USER
     async getUserPage(req, res, next) {
         try {
             const users = await this.userModel.getAll();
@@ -67,24 +67,32 @@ class AdminController {
     async getModifyUser(req, res, next) {
         try {
             const users = await this.userModel.getAll();
-            console.log(users);
-            let data = [];
-            for (let i = 0; i < users.length; ++i) {
-                let tests = await this.testModel.getbyUserID(users[i].id);
-                console.log(tests);
-                data[i] = {
-                    user: users[i],
-                    test: tests,
-                };
-            }
-            console.log(data);
+            let tests = await this.testModel.getAll();
             res.render('Admin/User/modify', {
-                userTable: data,
+                userTable: users,
+                testTable: tests,
             });
         } catch (error) {
             console.log(error);
         }
     };
+
+    async modifyUser(req, res, next) {
+        try {
+            let userList = req.body.userList;
+            let testList = req.body.testList;
+            console.log(userList,testList);
+            for(let i = 0; i < userList.length; ++i) {
+                for(let j = 0; j < testList.length; ++j) {
+                    console.log(userList[i],testList[j]);
+                    this.userModel.setPrivilege(userList[i],testList[j]);
+                }
+            }
+            res.redirect('/admin/user/modify')
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     async getNewTest(req, res, next) {
         try {

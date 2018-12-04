@@ -33,42 +33,77 @@
         <% include ../layout %>
 
         <div id="page-wrapper">
-            <table class="table" id="userTable">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Username</th>
-                        <th scope="col">Admin Status</th>
-                        <th scope="col">Test</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for(i=0; i < userTable.length; ++i) { %>
-                    <tr>
-                        <th scope="row">
-                            <%= userTable[i].user.id %>
-                        </th>
-                        <td>
-                            <%= userTable[i].user.username %>
-                        </td>
-                        <td>
-                            <%= userTable[i].user.admin %>
-                        </td>
-                        <td>
-                            <% for(j=0; j < userTable[i].test.length; ++j) { %>
-                            <%= userTable[i].test[j].name %>.
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Modify User</h1>
+                </div>
+            </div>
+            <div class="alert alert-success" id="onSuccess">
+                <strong>User modified!</strong>
+            </div>
+            <div class="row">
+                <div class="col-xs-5">
+                    <h2>User list</h2>
+                    <table class="table table-striped" id="userTable">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(i=0; i < userTable.length; ++i) { %>
+                            <tr>
+                                <th scope="row">
+                                    <%= userTable[i].id %>
+                                </th>
+                                <td>
+                                    <%= userTable[i].username %>
+                                </td>
+                                <td>
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input" name="user" type="checkbox" value="<%= userTable[i].id %> ">
+                                    </div>
+                                </td>
+                            </tr>
                             <% } %>
-                        </td>
-                    </tr>
-                    <% } %>
-                    <!-- <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr> -->
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-xs-7" style="border-left-style: double;">
+                    <h2>Test list</h2>
+                    <table class="table table-striped" id="userTable">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Test Name</th>
+                                <th scope="col">#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(i=0; i < testTable.length; ++i) { %>
+                            <tr>
+                                <th scope="row">
+                                    <%= testTable[i].id %>
+                                </th>
+                                <td>
+                                    <%= testTable[i].name %>
+                                </td>
+                                <td>
+                                    <div class="form-check-inline">
+                                        <input class="form-check-input" name="test" type="checkbox" value="<%= testTable[i].id %> ">
+                                    </div>
+                                </td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="save" class="btn btn-primary btn-lg pull-right">Save</button>
+            </div>
         </div>
         <!-- /#page-wrapper -->
 
@@ -87,6 +122,45 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="/javascripts/sb-admin-2.js"></script>
+
+    <script>
+        function getAllChecked() {
+            let checkedUser = [];
+            let checkedTest = [];
+            $("input[type='checkbox'][name='user']:checked").each(function () {
+                checkedUser.push($(this).val());
+            });
+            $("input[type='checkbox'][name='test']:checked").each(function () {
+                checkedTest.push($(this).val());
+            });
+            let re = {
+                checkedUser: checkedUser,
+                checkedTest: checkedTest
+            }
+            return re;
+        }
+        $(window).on("load", function () {
+            let check;
+            $('#save').click(function () {
+                check = getAllChecked();
+                console.log(check);
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/user/modify',
+                    data: {
+                        userList: check.checkedUser,
+                        testList: check.checkedTest
+                    }
+                }).done(function () {
+                    $('#onSuccess').show(500);
+                    $("input[type='checkbox'][name='user']:checked").prop('checked', false);
+                    $("input[type='checkbox'][name='test']:checked").prop('checked', false);
+                    $('#onSuccess').hide(200);
+                });
+            });
+            $('#onSuccess').hide();
+        });
+    </script>
 
 </body>
 

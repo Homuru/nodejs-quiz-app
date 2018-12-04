@@ -40,6 +40,7 @@ module.exports = function (app, passport) {
 	app.get('/admin', [authCtrl.isLoggedIn, adminCtrl.isAdmin.bind(adminCtrl)], adminCtrl.getAdminPage.bind(adminCtrl));
 	app.get('/admin/user', [authCtrl.isLoggedIn, adminCtrl.isAdmin.bind(adminCtrl)], adminCtrl.getUserPage.bind(adminCtrl));
 	app.get('/admin/user/modify', [authCtrl.isLoggedIn, adminCtrl.isAdmin.bind(adminCtrl)], adminCtrl.getModifyUser.bind(adminCtrl));
+	app.post('/admin/user/modify', [authCtrl.isLoggedIn, adminCtrl.isAdmin.bind(adminCtrl)], adminCtrl.modifyUser.bind(adminCtrl));
 
 	app.get('/admin/test/create', [authCtrl.isLoggedIn, adminCtrl.isAdmin.bind(adminCtrl)], adminCtrl.getNewTest.bind(adminCtrl));
 	app.get('/admin/test/modify', [authCtrl.isLoggedIn, adminCtrl.isAdmin.bind(adminCtrl)], adminCtrl.getModifyTest.bind(adminCtrl));

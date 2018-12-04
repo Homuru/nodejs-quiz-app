@@ -3,6 +3,11 @@
         <a class="navbar-brand" href="/profile">Home</a>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
+                <% if(user.admin) { %>
+                <li class="nav-item">
+                    <a href="/admin" class="btn btn-default btn-sm">Admin</a>
+                </li>
+                <% } %>
                 <li class="nav-item">
                     <a href="/logout" class="btn btn-default btn-sm">Logout</a>
                 </li>
