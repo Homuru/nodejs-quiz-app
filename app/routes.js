@@ -52,6 +52,4 @@ module.exports = function (app, passport) {
 	app.post('/admin/question/create', [authCtrl.isLoggedIn, adminCtrl.isAdmin.bind(adminCtrl)], adminCtrl.createNewQuestion.bind(adminCtrl));
 
 	app.get('/admin/result', [authCtrl.isLoggedIn, adminCtrl.isAdmin.bind(adminCtrl)], adminCtrl.getResultPage.bind(adminCtrl));
-
-
 }
